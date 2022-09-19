@@ -144,6 +144,8 @@ int changing(Matrix* matrix, Matrix* new_matrix){
     new_matrix->rows->cells = new Cell;
     new_matrix->rows->cells->inf = tmp_row_min->cells->inf;
     new_matrix->rows->cells->x = tmp_row_min->cells->x;
+    new_matrix->rows->cells->next_c = nullptr;
+    new_matrix->rows->next_r = nullptr;
     Cell* tmp_cell = tmp_row_min->cells->next_c;
     Cell* tmp_new_cell = new_matrix->rows->cells;
     while(tmp_cell != nullptr){
@@ -162,13 +164,16 @@ int changing(Matrix* matrix, Matrix* new_matrix){
         tmp_cell = tmp_row_min->cells->next_c;
         tmp_row->next_r = new Row;
         tmp_row->next_r->y = tmp_row_old->next_r->y;
+        tmp_row->next_r->next_r = nullptr;
         tmp_row->next_r->cells = new Cell;
+        tmp_row->next_r->cells->next_c = nullptr;
         tmp_row->next_r->cells->inf = tmp_row_min->cells->inf;
         tmp_row->next_r->cells->x = tmp_row_min->cells->x;
         while(tmp_cell != nullptr){
             tmp_new_cell->next_c = new Cell;
             tmp_new_cell->next_c->inf = tmp_cell->inf;
             tmp_new_cell->next_c->x = tmp_cell->x;
+            tmp_cell->next_c->next_c = nullptr;
             tmp_cell = tmp_cell->next_c;
             tmp_new_cell = tmp_new_cell->next_c;
         }
