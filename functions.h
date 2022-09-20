@@ -4,14 +4,14 @@
 typedef struct Cell{
     int x;
     int inf;
-    struct Cell* next_c;
+    struct Cell* next_c = nullptr;
 }Cell;
 
 typedef struct Row{
     int y;
     int f = 0;
     Cell* cells = nullptr;
-    struct Row* next_r;
+    struct Row* next_r = nullptr;
 }Row;
 
 typedef struct Matrix{

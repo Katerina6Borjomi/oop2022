@@ -81,6 +81,10 @@ int insert(Matrix* matrix, int nx, int my){
             while((tmp_cell->next_c != nullptr) && (tmp_cell->next_c->x < x)){
                 tmp_cell = tmp_cell->next_c;
             }
+            if((tmp_cell->next_c != nullptr) && (tmp_cell->next_c->x == x)){
+                std::cout << "В этой ячейке элемент уже присутствует. Попробуйте ещё раз.\n";
+                return 1;
+            }
             Cell* new_cell = new Cell;
             new_cell->x = x;
             new_cell->inf = inf;
@@ -92,14 +96,44 @@ int insert(Matrix* matrix, int nx, int my){
         while((tmp_row->next_r != nullptr) && (tmp_row->next_r->y < y)){
             tmp_row = tmp_row->next_r;
         }
-        Row* new_row = new Row;
-        new_row->y = y;
-        new_row->next_r = tmp_row->next_r;
-        new_row->cells = new Cell;
-        new_row->cells->x = x;
-        new_row->cells->inf = inf;
-        new_row->cells->next_c = nullptr;
-        tmp_row->next_r = new_row;
+        if((tmp_row->next_r != nullptr) && (tmp_row->next_r->y == y)){
+            tmp_row = tmp_row->next_r;
+            Cell* tmp_cell = tmp_row->cells;
+            if(x < tmp_cell->x){
+                Cell* new_cell = new Cell;
+                new_cell->x = x;
+                new_cell->inf = inf;
+                new_cell->next_c = tmp_row->cells;
+                tmp_row->cells = new_cell;
+                return 0;
+            }else if(x == tmp_cell->x){
+                std::cout << "В этой ячейке элемент уже присутствует. Попробуйте ещё раз.\n";
+                return 1;
+            }else{
+                while((tmp_cell->next_c != nullptr) && (tmp_cell->next_c->x < x)){
+                    tmp_cell = tmp_cell->next_c;
+                }
+                if((tmp_cell->next_c != nullptr) && (tmp_cell->next_c->x == x)){
+                    std::cout << "В этой ячейке элемент уже присутствует. Попробуйте ещё раз.\n";
+                    return 1;
+                }
+            }
+                Cell* new_cell = new Cell;
+                new_cell->x = x;
+                new_cell->inf = inf;
+                new_cell->next_c = tmp_cell->next_c;
+                tmp_cell->next_c = new_cell;
+                return 0;
+        }else{
+            Row* new_row = new Row;
+            new_row->y = y;
+            new_row->next_r = tmp_row->next_r;
+            new_row->cells = new Cell;
+            new_row->cells->x = x;
+            new_row->cells->inf = inf;
+            new_row->cells->next_c = nullptr;
+            tmp_row->next_r = new_row;
+        }
         return 0;
     }
 }
