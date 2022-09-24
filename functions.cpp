@@ -203,11 +203,12 @@ int changing(Matrix* matrix, Matrix* new_matrix){
         tmp_row->next_r->cells->next_c = nullptr;
         tmp_row->next_r->cells->inf = tmp_row_min->cells->inf;
         tmp_row->next_r->cells->x = tmp_row_min->cells->x;
+        tmp_new_cell = tmp_row->next_r->cells;///////
         while(tmp_cell != nullptr){
             tmp_new_cell->next_c = new Cell;
             tmp_new_cell->next_c->inf = tmp_cell->inf;
             tmp_new_cell->next_c->x = tmp_cell->x;
-            tmp_cell->next_c->next_c = nullptr;
+            //tmp_cell->next_c->next_c = nullptr;
             tmp_cell = tmp_cell->next_c;
             tmp_new_cell = tmp_new_cell->next_c;
         }
